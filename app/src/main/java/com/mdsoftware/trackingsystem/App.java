@@ -10,7 +10,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        TSConfOption confOption = new TSConfOption(this, "qa1609986349356", false);
+        TSConfOption confOption = new TSConfOption(this, "qa1609986349356", "", "", false);
         TSAnalyticsSDK.startWithConfigOptions(confOption);
     }
 }

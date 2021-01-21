@@ -1,95 +1,95 @@
 package com.mdsoftware.trackingsystemsdk;
 
-public class TSUser  {
+public class TSUser {
 
     public static String guid;
-    public static String real_name;
-    public static String nick_name;
-    public static String age;
-    public static String birthday;
-    public static String gender;
-    public static String account;
-    public static String country;
-    public static String province;
-    public static String city;
+    public String real_name;
+    public String nick_name;
+    public String age;
+    public String birthday;
+    public String gender;
+    public String account;
+    public String country;
+    public String province;
+    public String city;
 
     public static String getGuid() {
         return guid;
     }
 
-    public static String getReal_name() {
+    public String getReal_name() {
         return real_name;
     }
 
-    public static String getNick_name() {
+    public String getNick_name() {
         return nick_name;
     }
 
-    public static String getAge() {
+    public String getAge() {
         return age;
     }
 
-    public static String getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public static String getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public static String getAccount() {
+    public String getAccount() {
         return account;
     }
 
-    public static String getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public static String getProvince() {
+    public String getProvince() {
         return province;
     }
 
-    public static String getCity() {
+    public String getCity() {
         return city;
     }
 
-    public static void setGuid(String guid) {
-        TSUser.guid = guid;
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
-    public static void setReal_name(String real_name) {
-        TSUser.real_name = real_name;
+    public void setReal_name(String real_name) {
+        this.real_name = real_name;
     }
 
-    public static void setNick_name(String nick_name) {
-        TSUser.nick_name = nick_name;
+    public void setNick_name(String nick_name) {
+        this.nick_name = nick_name;
     }
 
-    public static void setAge(String age) {
-        TSUser.age = age;
+    public void setAge(String age) {
+        this.age = age;
     }
 
-    public static void setBirthday(String birthday) {
-        TSUser.birthday = birthday;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
-    public static void setGender(String gender) {
-        TSUser.gender = gender;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public static void setAccount(String account) {
-        TSUser.account = account;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public static void setCountry(String country) {
-        TSUser.country = country;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public static void setProvince(String province) {
-        TSUser.province = province;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
-    public static void setCity(String city) {
-        TSUser.city = city;
+    public void setCity(String city) {
+        this.city = city;
     }
 }

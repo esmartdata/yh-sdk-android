@@ -36,7 +36,7 @@ public class BodyUtils {
         map.put("device_screenHeight", Constants.getDeviceHeight());
         map.put("sdk_name", "app_track");
         map.put("sdk_type", "Android");
-        map.put("sdk_version", "1.0.0");
+        map.put("sdk_version", "2.0.0");
         map.put("business_channel", "default");
         map.put("timestamp", System.currentTimeMillis() + "");
         return map;
@@ -97,13 +97,13 @@ public class BodyUtils {
     }
 
     //5事件参数集
-    public static Map getEventMap(String event_name, String event_param) {
+    public static Map getEventMap(String event_name, com.alibaba.fastjson.JSONObject event_param) {
         //获取sign的参数集
         Map<String, Object> map = getHashMap();
         map.put("key", Constants.event.event);
         map.put("page_name", StringUtils.isEmpty(Constants.getPageName()) ? Constants.getPageTitle() : Constants.getPageName());
         map.put("event_name", StringUtils.isEmpty(event_name) ? "AppClick" : event_name);
-        map.put("event_param", StringUtils.isEmpty(event_param) ? "" : event_param);
+        map.put("event_param", getEventParamValue(event_param));
         map.put("element_position", Constants.ELEMENT_POSITION);
         map.put("element_selector", Constants.ELEMENT_SELECTOR);
         map.put("session_id", Constants.getSessionId());
@@ -118,22 +118,22 @@ public class BodyUtils {
     }
 
     //6用户参数集
-    public static Map getUserInfo() {
+    public static Map getUserInfo(TSUser user) {
         //获取sign的参数集
         Map<String, Object> map = new HashMap<>();
         map.put("key", Constants.event.user);
-        map.put("app_key", Constants.app_key);
+        map.put("app_key", TSAnalyticsSDK.getAppKey());
         map.put("guid", Constants.getGuid());
         map.put("device_id", Constants.getDeviceId());
-        map.put("real_name", TSUser.getReal_name());
-        map.put("nick_name", TSUser.getNick_name());
-        map.put("age", TSUser.getAge());
-        map.put("birthday", TSUser.getBirthday());
-        map.put("gender", TSUser.getGender());
-        map.put("account", TSUser.getAccount());
-        map.put("country", TSUser.getCountry());
-        map.put("province", TSUser.getProvince());
-        map.put("city", TSUser.getCity());
+        map.put("real_name", user.getReal_name());
+        map.put("nick_name", user.getNick_name());
+        map.put("age", user.getAge());
+        map.put("birthday", user.getBirthday());
+        map.put("gender", user.getGender());
+        map.put("account", user.getAccount());
+        map.put("country", user.getCountry());
+        map.put("province", user.getProvince());
+        map.put("city", user.getCity());
         map.put("timestamp", System.currentTimeMillis() + "");
         return map;
     }
@@ -178,4 +178,34 @@ public class BodyUtils {
         Constants.PAGE_QUERY = json.toString().equals("{\"profile\":\"UserHandle{0}\"}") ? "" : json.toString();
     }
 
+    public static String getEventParamValue(com.alibaba.fastjson.JSONObject jsonObject) {
+        if (jsonObject == null) {
+            return "";
+        } else {
+            StringBuffer buffer = new StringBuffer();
+            Set<String> strings = jsonObject.keySet();
+            Map<String, String> map = new HashMap<>();
+            for (String keyStr : strings) {
+                if (jsonObject.get(keyStr) instanceof Integer) {
+                    System.out.println("intent extras(int) :" + keyStr + "=" + jsonObject.get(keyStr));
+                } else if (jsonObject.get(keyStr) instanceof String) {
+                    System.out.println("intent extras(String) :" + keyStr + "=" + jsonObject.get(keyStr));
+                } else {
+                    System.out.println("intent extras() :" + keyStr + "=" + jsonObject.get(keyStr));
+                }
+                buffer.append(keyStr + "=" + jsonObject.get(keyStr) + "&");
+                map.put(keyStr, jsonObject.get(keyStr) + "");
+            }
+            return JSON.toJSONString(map);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        com.alibaba.fastjson.JSONObject jsonObject = new com.alibaba.fastjson.JSONObject();
+        jsonObject.put("phone", "1861087138x");
+        jsonObject.put("verificationCode", "HELLO");
+
+        getEventParamValue(jsonObject);
+    }
 }
