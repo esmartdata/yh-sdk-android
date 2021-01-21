@@ -9,16 +9,39 @@ Android SDK 的最新版本是2.0.0
 #### 1.1、从github上获取SDK库
 
 ```git
-clone 'trackingsystemsdk'库到本地:https://github.com/Orz013/TrackingSystemSDK.git
+clone 'trackingsystemsdk'库到本地:
 
-git clone 存放“trackingsystemsdk”的地址
+git clone https://github.com/esmartdata/yh-sdk-android.git
 ```
 
-#### 1.2、在项目中引入SDK库
+#### 1.2、在settings.gradle引入SDK库
+
+```java
+include ':app'
+include ':trackingsystemsdk'
+```
+
+#### 1.3、在在app build.gradle的dependencies标签下引入SDK库
 
 ```java
 implementation project(':trackingsystemsdk')
 ```
+
+### 方式二
+
+#### 1.1、通过下载aar文件集成项目
+
+1、将下载好的文件放入app 的lib文件夹中
+2、修改在app build.gradle的dependencies标签下加入
+
+```git
+//默认情况
+implementation fileTree(include: ['*.jar'], dir: 'libs')
+//修改为
+implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+```
+可以看到dir就是你aar要放到的路径下， 这里配置为默认的libs， 后面include一定要加上*.aar，不然就不会加入编译，然后就可以用了
+
 
 #### 1.3、初始化SDK
 
@@ -102,16 +125,23 @@ JsonObject中的每个参数如下
 * event_name：String，必须，事件名称
 * event_param：JsonObject，选填，事件属性
 
-```java
 示例 
-JSONObject jsonObject = new JSONObject();
-jsonObject.put("phone", "1861087138x");
-jsonObject.put("verificationCode", "HELLO");
-TSAnalyticsSDK.sharedInstance().event("获取验证码", jsonObject);
-```
-```java
-//调用方式
-TSAnalyticsSDK.sharedInstance().event(String event_name, JsonObject event_param)
-```
 
+```java
+
+//初始化事件
+JSONObject eventInfo = new JSONObject();
+//初始化事件参数
+JSONObject eventParam = new JSONObject();
+eventParam.put("phone", "1861087138x");//事件参数-手机号 非必须
+eventParam.put("verificationCode", "HELLO");//事件参数-验证码 非必需
+
+//设置事件名称
+eventInfo.put("eventName", "获取验证码");//事件名称 必须
+//设置事件参数
+eventInfo.put("eventParam", eventParam);//事件名称 必须
+
+//调用采集事件接口
+TSAnalyticsSDK.sharedInstance().event(eventInfo);
+```
 通过上面的监测代码，我们可以监测到获取手机验证码的按钮，被点击了几次，以及哪些手机号在获取验证码
