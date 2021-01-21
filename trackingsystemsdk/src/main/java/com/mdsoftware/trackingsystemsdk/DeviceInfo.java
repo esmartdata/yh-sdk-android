@@ -20,7 +20,6 @@ public class DeviceInfo {
     public DeviceInfo() {
     }
 
-
     public static DeviceInfo getInstance() {
 
         if (instance == null) {
@@ -28,7 +27,6 @@ public class DeviceInfo {
         }
         return instance;
     }
-
 
     /**
      * 获取设备id

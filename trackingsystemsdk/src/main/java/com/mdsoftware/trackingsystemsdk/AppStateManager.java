@@ -1,5 +1,4 @@
 /*
- * Created by zhangxiangwei on 2019/12/19.
  * Copyright 2015－2020 Sensors Data Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

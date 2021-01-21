@@ -25,9 +25,6 @@ public class TSAnalyticsSDK {
         return option;
     }
 
-    /**
-     * 初始化神策 SDK
-     */
     public static void startWithConfigOptions(TSConfOption confOption) {
         if (StringUtils.isEmpty(confOption.getAppKey())) {
             Log.v("ts", "AppKey 不能为空");
