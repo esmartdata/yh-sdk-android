@@ -28,8 +28,8 @@ public class AsyncHttpUtils {
     //核心池大小设为CPU数加1
     private static final int CORE_POOL_SIZE = CPU_COUNT + 1;
     //设置线程池的最大大小
-//    private static final int MAX_POOL_SIZE = 2 * CPU_COUNT + 1;
-    private static final int MAX_POOL_SIZE = 2;
+    private static final int MAX_POOL_SIZE = 2 * CPU_COUNT + 1;
+//    private static final int MAX_POOL_SIZE = 2;
     //存活时间
     private static final long KEEP_ALIVE = 5L;
 

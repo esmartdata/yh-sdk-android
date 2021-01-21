@@ -97,7 +97,9 @@ public class BodyUtils {
     }
 
     //5事件参数集
-    public static Map getEventMap(String event_name, com.alibaba.fastjson.JSONObject event_param) {
+    public static Map getEventMap(com.alibaba.fastjson.JSONObject jsonObject) {
+        String event_name = jsonObject.getString("eventName");
+        com.alibaba.fastjson.JSONObject event_param = jsonObject.getJSONObject("eventParam");
         //获取sign的参数集
         Map<String, Object> map = getHashMap();
         map.put("key", Constants.event.event);
@@ -182,9 +184,8 @@ public class BodyUtils {
         if (jsonObject == null) {
             return "";
         } else {
-            StringBuffer buffer = new StringBuffer();
             Set<String> strings = jsonObject.keySet();
-            Map<String, String> map = new HashMap<>();
+            Map<String, Object> map = new HashMap<>();
             for (String keyStr : strings) {
                 if (jsonObject.get(keyStr) instanceof Integer) {
                     System.out.println("intent extras(int) :" + keyStr + "=" + jsonObject.get(keyStr));
@@ -193,14 +194,13 @@ public class BodyUtils {
                 } else {
                     System.out.println("intent extras() :" + keyStr + "=" + jsonObject.get(keyStr));
                 }
-                buffer.append(keyStr + "=" + jsonObject.get(keyStr) + "&");
                 map.put(keyStr, jsonObject.get(keyStr) + "");
             }
             return JSON.toJSONString(map);
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         com.alibaba.fastjson.JSONObject jsonObject = new com.alibaba.fastjson.JSONObject();
         jsonObject.put("phone", "1861087138x");
