@@ -7,9 +7,6 @@ import java.math.RoundingMode;
 
 public class Constants {
 
-    public static String app_key;
-    public static String ts_app;
-    public static String ts_ext;
     public static String PREV_PATH = "";
     public static String CURRENT_PATH;
     public static String PAGE_NAME;
@@ -19,7 +16,6 @@ public class Constants {
     public static String START_SESSION_TIME;
     public static String END_SESSION_TIME;
     public static String PREV_SESSION_ID = "";
-    public static boolean DEBUG;
     public static Context context = TSAnalyticsSDK.getContext();
     public static String SESSION_ID = "";
     public static String ELEMENT_POSITION;

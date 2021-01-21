@@ -20,7 +20,7 @@ public class SwitchBackgroundCallbacks implements Application.ActivityLifecycleC
         if (count == 0) { //后台切换到前台
             Constants.PREV_PATH = "";
             Constants.setPrevSessionId("");
-            sdk.event("应用启动", "");
+            sdk.event("应用启动", null);
         }
     }
 
@@ -58,7 +58,7 @@ public class SwitchBackgroundCallbacks implements Application.ActivityLifecycleC
     public void onActivityStopped(Activity activity) {
         count--;
         if (count == 0) { //前台切换到后台
-            sdk.event("应用进入后台", "");
+            sdk.event("应用进入后台", null);
         }
 
     }

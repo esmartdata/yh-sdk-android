@@ -1,10 +1,13 @@
 # Android SDK
+
 Android SDK 的最新版本是2.0.0
 
 ## 一、集成SDK
 
 ### 方式一
+
 #### 1.1、从github上获取SDK库
+
 ```git
 clone 'trackingsystemsdk'库到本地:https://github.com/Orz013/TrackingSystemSDK.git
 
@@ -20,13 +23,22 @@ implementation project(':trackingsystemsdk')
 #### 1.3、初始化SDK
 
 自定义一个Application中：
-// 初始化TSConfOption类：
 
-// 用于区分一个项目下的多个应用, 可选
+参数说明：
 
+| 字段    | 类型    | 是否必须 | 说明                                       |
+| ------- | ------- | -------- | ------------------------------------------ |
+| app_key | String  | 是       | 应用唯一标识，由TrackingSystem提供，初始化 |
+| debug   | Boolean | 是       | 是否是调试模式                             |
+| ts_app  | String  | 否       | 同一个应用，有不同版本时，以该属性区分     |
+| ts_ext  | String  | 否       | 全局自定义扩展属性                         |
+
+```java
+// 设置AppKey,ts_ext,ts_app，其中ts_ext,ts_app为非必传参数
 TSConfOption confOption = new TSConfOption(this, "appkey", "ts_ext","ts_app", false);
 //初始化SDK
 TSAnalyticsSDK.startWithConfigOptions(confOption);
+```
 
 至此已完成对页面数据的采集，用户访问页面，即可监测到对应数据。
 
@@ -40,57 +52,66 @@ TSAnalyticsSDK.startWithConfigOptions(confOption);
 
 参数说明：JsonObject，只支持以下属性的设置
 
-|字段|类型|是否必须|说明|
-| ----- | ----- | ----- | ----- |
-|guid|String|是| |
-| real_name   | String   | 否   | 真实姓名   |
-| nick_name   | String   | 否   | 昵称   |
-| age    | Number   | 否   | 年龄   |
-| birthday   | String   | 否   | 生日   |
-| gender   | String   | 否   | 性别: 男/女   |
-| account | String | 否 | 账号 |
-| country   | String   | 否   | 国家   |
-| province   | String   | 否   | 省份   |
-| city   | String   | 否   | 城市   |
+| 字段      | 类型   | 是否必须 | 说明                               |
+| --------- | ------ | -------- | ---------------------------------- |
+| guid      | String | 是       | 应用唯一标识，由TrackingSystem提供 |
+| real_name | String | 否       | 真实姓名                           |
+| nick_name | String | 否       | 昵称                               |
+| age       | Number | 否       | 年龄                               |
+| birthday  | String | 否       | 生日                               |
+| gender    | String | 否       | 性别: 男/女                        |
+| account   | String | 否       | 账号                               |
+| country   | String | 否       | 国家                               |
+| province  | String | 否       | 省份                               |
+| city      | String | 否       | 城市                               |
 
 
 ```java
 示例
 //在登录成功后设置用户信息
 TSUser user = new TSUser();
-user.setGuid("");
+user.setGuid("应用唯一标识，由TrackingSystem提供");
 TSAnalyticsSDK.sharedInstance().setUserInfo(user);
-
-​```java
+```
 
 ### 2.2 采集页面数据
 
 在需要自定义页面名称的控制器中继承协议，实现对应的协议方法即可
+```java
+//获取单例 TSAnalyticsSDK
+TSAnalyticsSDK analytics = TSAnalyticsSDK.sharedInstance()；
 
 // 设置page_name：
-TSAnalyticsSDK.sharedInstance().setPageName("pageName");
+analytics.setPageName("pageName");
 
 // 设置page_title：
-TSAnalyticsSDK.sharedInstance().setPageTitle("pageTitle");
-
-@end 
+analytics.setPageTitle("pageTitle");
 ```
+
 至此已完成对页面数据的采集，用户访问页面，即可监测到对应数据
 
 
 
 ## 三、自定义事件埋码
 
-示例  
-⻚⾯有⼀个获取⼿机验证码的按钮需要，需要添加监测，可在点击按钮时调用事件采集接口
+ ⻚⾯有⼀个获取⼿机验证码的按钮需要，需要添加监测，可在点击按钮时调用事件采集接口
 
 接口参数类型：JsonObject  
 JsonObject中的每个参数如下
 
 * event_name：String，必须，事件名称
 * event_param：JsonObject，选填，事件属性
+
 ```java
+示例 
+JSONObject jsonObject = new JSONObject();
+jsonObject.put("phone", "1861087138x");
+jsonObject.put("verificationCode", "HELLO");
+TSAnalyticsSDK.sharedInstance().event("获取验证码", jsonObject);
+```
+```java
+//调用方式
 TSAnalyticsSDK.sharedInstance().event(String event_name, JsonObject event_param)
 ```
-通过上面的监测代码，我们可以监测到获取手机验证码的按钮，被点击了几次，以及哪些手机号在获取验证码
 
+通过上面的监测代码，我们可以监测到获取手机验证码的按钮，被点击了几次，以及哪些手机号在获取验证码
