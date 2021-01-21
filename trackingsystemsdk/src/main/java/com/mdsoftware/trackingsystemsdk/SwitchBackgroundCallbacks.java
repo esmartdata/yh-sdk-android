@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.UUID;
 
 public class SwitchBackgroundCallbacks implements Application.ActivityLifecycleCallbacks {
@@ -20,7 +22,13 @@ public class SwitchBackgroundCallbacks implements Application.ActivityLifecycleC
         if (count == 0) { //后台切换到前台
             Constants.PREV_PATH = "";
             Constants.setPrevSessionId("");
-            sdk.event("应用启动", null);
+            //初始化事件
+            JSONObject eventInfo = new JSONObject();
+            //设置事件名称
+            eventInfo.put("eventName", "应用启动");//事件名称 必须
+            //设置事件参数
+            eventInfo.put("eventParam", null);//事件名称 必须
+            sdk.event(eventInfo);
         }
     }
 
@@ -58,7 +66,13 @@ public class SwitchBackgroundCallbacks implements Application.ActivityLifecycleC
     public void onActivityStopped(Activity activity) {
         count--;
         if (count == 0) { //前台切换到后台
-            sdk.event("应用进入后台", null);
+            //初始化事件
+            JSONObject eventInfo = new JSONObject();
+            //设置事件名称
+            eventInfo.put("eventName", "应用进入后台");//事件名称 必须
+            //设置事件参数
+            eventInfo.put("eventParam", null);//事件名称 必须
+            sdk.event(eventInfo);
         }
 
     }

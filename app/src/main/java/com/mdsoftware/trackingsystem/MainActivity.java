@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mdsoftware.trackingsystemsdk.StringUtils;
 import com.mdsoftware.trackingsystemsdk.TSAnalyticsSDK;
 import com.mdsoftware.trackingsystemsdk.TSUser;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 user.setGuid("123456");
                 TSAnalyticsSDK.sharedInstance().setUserInfo(user);
 
-                Toast.makeText(MainActivity.this,"你已经点击了登陆",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "你已经点击了登陆", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -56,12 +57,25 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                com.alibaba.fastjson.JSONObject jsonObject = new com.alibaba.fastjson.JSONObject();
-                jsonObject.put("phone", "1861087138x");
-                jsonObject.put("verificationCode", "HELLO");
-                event("获取验证码", jsonObject);
+//                com.alibaba.fastjson.JSONObject jsonObject = new com.alibaba.fastjson.JSONObject();
+//                jsonObject.put("phone", "1861087138x");
+//                jsonObject.put("verificationCode", "HELLO");
+//                event("获取验证码", jsonObject);
+                //初始化事件
+                JSONObject eventInfo = new JSONObject();
+                //初始化事件参数
+                JSONObject eventParam = new JSONObject();
+                eventParam.put("phone", "1861087138x");//事件参数-手机号 非必须
+                eventParam.put("verificationCode", "HELLO");//事件参数-验证码 非必需
+                //设置事件名称
+                eventInfo.put("eventName", "获取验证码");//事件名称 必须
+                //设置事件参数
+                eventInfo.put("eventParam", eventParam);//事件名称 必须
 
-                Toast.makeText(MainActivity.this,"你已经点击了手动触发按钮",Toast.LENGTH_SHORT).show();
+                //调用采集事件接口
+                TSAnalyticsSDK.sharedInstance().event(eventInfo);
+
+                Toast.makeText(MainActivity.this, "你已经点击了手动触发按钮", Toast.LENGTH_SHORT).show();
             }
         });
     }

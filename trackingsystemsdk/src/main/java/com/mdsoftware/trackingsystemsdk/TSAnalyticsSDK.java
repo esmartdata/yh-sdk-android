@@ -73,12 +73,12 @@ public class TSAnalyticsSDK {
         AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getEndSessionMap()));
     }
 
-    public static void event(String event_name, JSONObject event_param) {
+    public static void event(JSONObject event_param) {
         JSONArray jArray = new JSONArray();
-        jArray.add(BodyUtils.getEventMap(event_name, event_param));
+        jArray.add(BodyUtils.getEventMap(event_param));
         String str = jArray.toString();
         Log.v("Lifecycle_api", " event: " + str);
-        AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getEventMap(event_name, event_param)));
+        AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getEventMap(event_param)));
     }
 
     public static void setPageName(String pageName) {
