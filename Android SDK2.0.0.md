@@ -43,6 +43,38 @@ implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
 可以看到dir就是你aar要放到的路径下， 这里配置为默认的libs， 后面include一定要加上*.aar，不然就不会加入编译，然后就可以用了
 
 
+
+### 方式三
+
+#### 1.1、通过maven引入
+
+1、在根目录的build.gradle文件中添加以下代码:
+
+```android
+maven { url "https://oss.sonatype.org/content/repositories/snapshots"}
+```
+
+```android
+allprojects {
+    repositories {
+        ......
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+    }
+}
+```
+
+2、修改在app build.gradle的dependencies标签下加入
+
+```git
+//默认情况
+implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:1.0.0-SNAPSHOT'
+```
+
+
+
+
 #### 1.3、初始化SDK
 
 自定义一个Application中：
