@@ -51,7 +51,7 @@ implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
 1、在根目录的build.gradle文件中添加以下代码:
 
 ```android
-maven { url "https://oss.sonatype.org/content/repositories/snapshots"}
+maven { url "https://oss.sonatype.org/service/local/staging/deploy/maven2"}
 ```
 
 ```android
@@ -59,7 +59,7 @@ allprojects {
     repositories {
         ......
         maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots"
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
         }
     }
 }
@@ -69,7 +69,7 @@ allprojects {
 
 ```git
 //默认情况
-implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:1.0.0-SNAPSHOT'
+implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:2.0.0'
 ```
 
 
