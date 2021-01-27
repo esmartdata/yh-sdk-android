@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("unchecked")
 public class BodyUtils {
 
     //1公共参数集

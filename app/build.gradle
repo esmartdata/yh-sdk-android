@@ -21,14 +21,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-//    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.alibaba:fastjson:1.1.55.android'
     implementation project(':trackingsystemsdk')
-
+//    implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:2.0.0-SNAPSHOT'
+//    implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:2.0.0'
 }

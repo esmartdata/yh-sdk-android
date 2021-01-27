@@ -13,8 +13,6 @@ import com.mdsoftware.trackingsystemsdk.StringUtils;
 import com.mdsoftware.trackingsystemsdk.TSAnalyticsSDK;
 import com.mdsoftware.trackingsystemsdk.TSUser;
 
-import static com.mdsoftware.trackingsystemsdk.TSAnalyticsSDK.event;
-
 public class MainActivity extends AppCompatActivity {
 
     EditText et1, et2, et3, et4, et5, et6;

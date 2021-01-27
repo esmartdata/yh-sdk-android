@@ -1,8 +1,12 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
-version = "2.0.0"
+// 进行数字签名
+signing {
+    required { gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
 
 android {
     compileSdkVersion 30
@@ -10,11 +14,15 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 1
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     buildTypes {
@@ -28,8 +36,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -38,79 +45,98 @@ dependencies {
     implementation files('libs/commons-codec-1.15.jar')
 }
 
-def siteUrl = 'https://github.com/esmartdata/yh-sdk-android/releases'                        // #CONFIG# // project homepage
-def gitUrl = 'https://github.com/esmartdata/yh-sdk-android/releases.git'                     // #CONFIG# // project git
-group = "com.esmartdata"
+// type显示指定任务类型或任务, 这里指定要执行Javadoc这个task,这个task在gradle中已经定义
+task androidJavadocs(type: Javadoc) {
+    // 设置源码所在的位置
+    source = android.sourceSets.main.java.sourceFiles
+}
 
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
+// 生成javadoc.jar
+task androidJavadocsJar(type: Jar) {
+    // 指定文档名称
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+
+// 生成sources.jar
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.sourceFiles
+}
+
+// 产生相关配置文件的任务
+artifacts {
+    archives androidSourcesJar
+    archives androidJavadocsJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //不加会导致缺失 .pom.asc 文件
+            beforeDeployment {
+                MavenDeployment deployment -> signing.signPom(deployment)
+            }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
+            }
+
+//            repository(url: uri('../repository'))
+
+            pom.project {
+                name 'TrackingSystemSDK'
+                version '1.0.2'
+                artifactId 'TrackingSystemSDK'
+                groupId 'com.esmartwave.analytics.androidsdk'
                 packaging 'aar'
-                name 'Esmart Data Code For Android'                                   // #CONFIG# // project title
-                url siteUrl
-                // Set your license
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
+                description 'Upload TrackingSystemSDK'
+
                 developers {
                     developer {
-                        id 'Orz013'                                           // #CONFIG# // your user id (you can write your nickname)
-                        name 'Orz013'                                       // #CONFIG# // your user name
-                        email '361995323@qq.com'                               // #CONFIG# // your email
+                        id 'kingsley.li'
+                        name 'kingsley.li'
+                        email 'kingsley.li@esmartwave.com'
                     }
                 }
+
                 scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
+                    connection 'scm:git:https://github.com/esmartdata/yh-sdk-android.git'
+                    developerConnection 'scm:git:https://github.com/esmartdata/yh-sdk-android.git'
+                    url 'https://github.com/esmartdata/yh-sdk-android.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
                 }
             }
         }
     }
 }
+//uploadArchives{
+//    repositories.mavenDeployer{
+//        // 配置本地仓库路径，项目根目录下的repository目录中
+//        repository(url: uri('../repository'))
+//        pom.groupId = "com.esmartwave.analytics.androidsdk"// 唯一标识（通常为模块包名，也可以任意）
+//        pom.artifactId = "TrackingSystemSDK" // 项目名称（通常为类库模块名称，也可以任意）
+//        pom.version = "2.0.0" // 版本号
+//    }
+//}
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    // archives javadocJar
-    archives sourcesJar
-}
-
-Properties properties = new Properties()
-boolean isHasFile = false
-if (project.rootProject.file('local.properties') != null){
-    isHasFile = true
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-}
-bintray {
-    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray.user")
-    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "esmartdata"                                                 // #CONFIG# project name in jcenter
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
-}
-
+//apply plugin: 'com.novoda.bintray-release'
+////提交到bintray
+//publish {
+//    userOrg = 'md' //bintray账户下某个组织id
+//    groupId = 'com.esmartwave.analytics.androidsdk' //maven仓库下库的包名，一般为模块包名
+//    artifactId = 'TrackingSystemSDK' //项目名称
+//    publishVersion = '2.0.0' //版本号
+//    desc = 'custom chart for android' //项目介绍，可以不写
+//    website = '' //项目主页，可以不写
+//}

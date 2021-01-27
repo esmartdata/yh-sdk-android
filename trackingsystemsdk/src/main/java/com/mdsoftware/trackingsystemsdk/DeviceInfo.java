@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class DeviceInfo {
 
     private static DeviceInfo instance;
@@ -31,7 +32,7 @@ public class DeviceInfo {
     /**
      * 获取设备id
      *
-     * @return
+     * @return string
      */
     public String getDeviceId(Context context) {
         String deviceId = getAppProcessId(context);
@@ -45,8 +46,8 @@ public class DeviceInfo {
     /**
      * 获取设备宽度
      *
-     * @param context
-     * @return
+     * @param context shangxiawen
+     * @return string
      */
     public String deviceWidth(Context context) {
         return context.getResources().getDisplayMetrics().widthPixels + "";
@@ -55,8 +56,8 @@ public class DeviceInfo {
     /**
      * 获取设备高度
      *
-     * @param context
-     * @return
+     * @param context shangxiawen
+     * @return string
      */
     public String deviceHeight(Context context) {
         return context.getResources().getDisplayMetrics().heightPixels + "";
@@ -66,8 +67,8 @@ public class DeviceInfo {
      * 获取当前的网络状态 ：没有网络-0：WIFI网络1：4G网络-4：3G网络-3：2G网络-2
      * 自定义
      *
-     * @param context
-     * @return
+     * @param context shangxiawen
+     * @return string
      */
     public String getAPNType(Context context) {
         //结果返回值
@@ -112,6 +113,8 @@ public class DeviceInfo {
 
     /**
      * 获取手机品牌
+     *
+     * @return string
      */
     public String getBrand() {
         return android.os.Build.BRAND;
@@ -119,6 +122,8 @@ public class DeviceInfo {
 
     /**
      * 获取手机型号
+     *
+     * @return string
      */
     public String getModel() {
         return android.os.Build.MODEL;
@@ -127,7 +132,7 @@ public class DeviceInfo {
     /**
      * 获取操作系统
      *
-     * @return
+     * @return string
      */
     public String getOS() {
         return "Android " + android.os.Build.VERSION.RELEASE;
@@ -136,15 +141,16 @@ public class DeviceInfo {
     /**
      * 获取手机Android 版本
      *
-     * @return
+     * @return string
      */
     public String getBuildVersion() {
         return android.os.Build.VERSION.RELEASE;
     }
+
     /**
      * 获取手机Android 版本
      *
-     * @return
+     * @return string
      */
     public String getBuildVersion(Context context) {
         try {
@@ -161,7 +167,7 @@ public class DeviceInfo {
     /**
      * 获取手机Android_ID
      *
-     * @return
+     * @return string
      */
     public static String getAppProcessId(Context context) {
         return Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
