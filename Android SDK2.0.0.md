@@ -6,55 +6,17 @@ Android SDK 的最新版本是2.0.0
 
 ### 方式一
 
-#### 1.1、从github上获取SDK库
-
-```git
-clone 'trackingsystemsdk'库到本地:
-
-git clone https://github.com/esmartdata/yh-sdk-android.git
-```
-
-#### 1.2、在settings.gradle引入SDK库
-
-```java
-include ':app'
-include ':trackingsystemsdk'
-```
-
-#### 1.3、在在app build.gradle的dependencies标签下引入SDK库
-
-```java
-implementation project(':trackingsystemsdk')
-```
-
-### 方式二
-
-#### 1.1、通过下载aar文件集成项目
-
-1、将下载好的文件放入app 的lib文件夹中
-2、修改在app build.gradle的dependencies标签下加入
-
-```git
-//默认情况
-implementation fileTree(include: ['*.jar'], dir: 'libs')
-//修改为
-implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
-```
-可以看到dir就是你aar要放到的路径下， 这里配置为默认的libs， 后面include一定要加上*.aar，不然就不会加入编译，然后就可以用了
-
-
-
-### 方式三
-
 #### 1.1、通过maven引入
 
-1、在根目录的build.gradle文件中添加以下代码:
+1、在根目录的build.gradle文件中的allprojects标签里的repositories 标签下添加以下代码:
 
-```android
+```java
 maven { url "https://oss.sonatype.org/service/local/staging/deploy/maven2"}
 ```
 
-```android
+```java
+//build.gradle下allprojects完整代码片
+
 allprojects {
     repositories {
         ......
@@ -65,10 +27,9 @@ allprojects {
 }
 ```
 
-2、修改在app build.gradle的dependencies标签下加入
+2、修改在app下的 build.gradle中的dependencies标签下加入
 
 ```git
-//默认情况
 implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:2.0.0'
 ```
 
@@ -132,6 +93,7 @@ TSAnalyticsSDK.sharedInstance().setUserInfo(user);
 ### 2.2 采集页面数据
 
 在需要自定义页面名称的控制器中继承协议，实现对应的协议方法即可
+
 ```java
 //获取单例 TSAnalyticsSDK
 TSAnalyticsSDK analytics = TSAnalyticsSDK.sharedInstance()；
@@ -160,7 +122,6 @@ JsonObject中的每个参数如下
 示例 
 
 ```java
-
 //初始化事件
 JSONObject eventInfo = new JSONObject();
 //初始化事件参数
@@ -176,4 +137,5 @@ eventInfo.put("eventParam", eventParam);//事件名称 必须
 //调用采集事件接口
 TSAnalyticsSDK.sharedInstance().event(eventInfo);
 ```
+
 通过上面的监测代码，我们可以监测到获取手机验证码的按钮，被点击了几次，以及哪些手机号在获取验证码
