@@ -4,25 +4,24 @@ Android SDK 的最新版本是2.0.0
 
 ## 一、集成SDK
 
-### 方式一
-
 #### 1.1、通过maven引入
 
-1、在根目录的build.gradle文件中的allprojects标签里的repositories 标签下添加以下代码:
+#### 1、在根目录的build.gradle文件中的allprojects标签里的repositories 标签下添加以下代码:
 
 ```java
-maven { url "https://oss.sonatype.org/service/local/staging/deploy/maven2"}
+mavenCentral()
 ```
 
 ```java
 //build.gradle下allprojects完整代码片
 
+1、在根目录的build.gradle文件中添加以下代码:
+
 allprojects {
     repositories {
-        ......
-        maven {
-            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-        }
+        google()
+        jcenter()
+        mavenCentral()
     }
 }
 ```
