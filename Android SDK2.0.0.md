@@ -115,8 +115,8 @@ analytics.setPageTitle("pageTitle");
 接口参数类型：JsonObject  
 JsonObject中的每个参数如下
 
-* event_name：String，必须，事件名称
-* event_param：JsonObject，选填，事件属性
+* eventName：String，必须，事件名称
+* eventParam：JsonObject，选填，事件属性
 
 示例 
 
