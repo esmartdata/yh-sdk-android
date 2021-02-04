@@ -2,8 +2,9 @@ package com.mdsoftware.trackingsystemsdk;
 
 import android.util.Log;
 
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -70,8 +71,12 @@ public class AsyncHttpUtils {
             urlConnection.connect();
 
             //Create JSONObject here
-            com.alibaba.fastjson.JSONObject jsonParam = new JSONObject();
-            jsonParam.put("data", Json);
+            JSONObject jsonParam = new JSONObject();
+            try {
+                jsonParam.put("data", Json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
             out.write(jsonParam.toString());
             out.close();
@@ -98,9 +103,6 @@ public class AsyncHttpUtils {
             e.printStackTrace();
         } catch (IOException e) {
 
-            e.printStackTrace();
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
             if (urlConnection != null)

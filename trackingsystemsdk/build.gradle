@@ -35,14 +35,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
-    implementation 'com.alibaba:fastjson:1.1.55.android'
-    implementation files('libs/commons-codec-1.15.jar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
 
 // type显示指定任务类型或任务, 这里指定要执行Javadoc这个task,这个task在gradle中已经定义
@@ -78,9 +71,9 @@ uploadArchives {
                 MavenDeployment deployment -> signing.signPom(deployment)
             }
 
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
-                authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
-            }
+//            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+//                authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
+//            }
 
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
                 authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
@@ -90,7 +83,7 @@ uploadArchives {
 
             pom.project {
                 name 'TrackingSystemSDK'
-                version '1.0.2'
+                version '2.0.0'
                 artifactId 'TrackingSystemSDK'
                 groupId 'com.esmartwave.analytics.androidsdk'
                 packaging 'aar'

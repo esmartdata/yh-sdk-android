@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSONObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -25,10 +27,14 @@ public class SwitchBackgroundCallbacks implements Application.ActivityLifecycleC
             //初始化事件
             JSONObject eventInfo = new JSONObject();
             //设置事件名称
-            eventInfo.put("eventName", "应用启动");//事件名称 必须
-            //设置事件参数
-            eventInfo.put("eventParam", null);//事件名称 必须
-            sdk.event(eventInfo);
+            try {
+                eventInfo.put("eventName", "应用启动");//事件名称 必须
+                //设置事件参数
+                eventInfo.put("eventParam", null);//事件名称 必须
+                sdk.event(eventInfo);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -69,10 +75,15 @@ public class SwitchBackgroundCallbacks implements Application.ActivityLifecycleC
             //初始化事件
             JSONObject eventInfo = new JSONObject();
             //设置事件名称
-            eventInfo.put("eventName", "应用进入后台");//事件名称 必须
-            //设置事件参数
-            eventInfo.put("eventParam", null);//事件名称 必须
-            sdk.event(eventInfo);
+            try {
+                eventInfo.put("eventName", "应用进入后台");//事件名称 必须
+                //设置事件参数
+                eventInfo.put("eventParam", null);//事件名称 必须
+                sdk.event(eventInfo);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }
