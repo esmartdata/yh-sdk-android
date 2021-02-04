@@ -17,7 +17,6 @@ android {
         versionCode 1
         versionName "1.0.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -35,14 +34,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
-    implementation 'com.alibaba:fastjson:1.1.55.android'
-    implementation files('libs/commons-codec-1.15.jar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
 
 // type显示指定任务类型或任务, 这里指定要执行Javadoc这个task,这个task在gradle中已经定义
@@ -86,11 +78,9 @@ uploadArchives {
                 authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
             }
 
-//            repository(url: uri('../repository'))
-
             pom.project {
                 name 'TrackingSystemSDK'
-                version '1.0.2'
+                version '2.0.1'
                 artifactId 'TrackingSystemSDK'
                 groupId 'com.esmartwave.analytics.androidsdk'
                 packaging 'aar'
@@ -120,23 +110,3 @@ uploadArchives {
         }
     }
 }
-//uploadArchives{
-//    repositories.mavenDeployer{
-//        // 配置本地仓库路径，项目根目录下的repository目录中
-//        repository(url: uri('../repository'))
-//        pom.groupId = "com.esmartwave.analytics.androidsdk"// 唯一标识（通常为模块包名，也可以任意）
-//        pom.artifactId = "TrackingSystemSDK" // 项目名称（通常为类库模块名称，也可以任意）
-//        pom.version = "2.0.0" // 版本号
-//    }
-//}
-
-//apply plugin: 'com.novoda.bintray-release'
-////提交到bintray
-//publish {
-//    userOrg = 'md' //bintray账户下某个组织id
-//    groupId = 'com.esmartwave.analytics.androidsdk' //maven仓库下库的包名，一般为模块包名
-//    artifactId = 'TrackingSystemSDK' //项目名称
-//    publishVersion = '2.0.0' //版本号
-//    desc = 'custom chart for android' //项目介绍，可以不写
-//    website = '' //项目主页，可以不写
-//}

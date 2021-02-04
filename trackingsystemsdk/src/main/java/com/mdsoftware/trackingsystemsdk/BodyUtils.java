@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
-
-import org.apache.commons.codec.binary.Base64;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,6 +40,7 @@ public class BodyUtils {
         map.put("timestamp", System.currentTimeMillis() + "");
         return map;
     }
+
 
     //2页面参数集
     public static Map getPageViewMap() {
@@ -98,9 +97,9 @@ public class BodyUtils {
     }
 
     //5事件参数集
-    public static Map getEventMap(com.alibaba.fastjson.JSONObject jsonObject) {
+    public static Map getEventMap(JSONObject jsonObject) throws JSONException {
         String event_name = jsonObject.getString("eventName");
-        com.alibaba.fastjson.JSONObject event_param = jsonObject.getJSONObject("eventParam");
+        JSONObject event_param = jsonObject.getJSONObject("eventParam");
         //获取sign的参数集
         Map<String, Object> map = getHashMap();
         map.put("key", Constants.event.event);
@@ -143,15 +142,37 @@ public class BodyUtils {
 
     public static String jsonToBase64(Map map) {
         try {
-            byte byteXl[] = JSON.toJSONString(map).getBytes("UTF-8");
-            String base64EncStr = new String(Base64.encodeBase64(byteXl), "UTF-8");
-            String jsonString = URLEncoder.encode(base64EncStr, "UTF-8");
-            return jsonString;
+//            byte byteXl[] = JSON.toJSONString(map).getBytes("UTF-8");
+//            String base64EncStr = new String(Base64.encodeBase64(byteXl), "UTF-8");
+//            String jsonString = URLEncoder.encode(base64EncStr, "UTF-8");
+//            return jsonString;
+//            JSONObject jsonObject=JSONObject.fromObject(map);
+
+            String x = MapToJson(map);
+            return Base64Utils.encodeToString(x);
+//            return Base64Coder.encodeString(map.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return "";
+    }
+
+    public static String MapToJson(Map<String, Object> data) {
+        StringBuffer json = new StringBuffer();
+        json.append("{");
+        Iterator<Map.Entry<String, Object>> iterator = data.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Map.Entry<String, Object> entry = iterator.next();
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            json.append("\"" + key + "\":\"" + value + "\",");
+        }
+        json.deleteCharAt(json.length() - 1);
+        json.append("}");
+
+        return json.toString();
     }
 
     public static void getValue(Intent intent) {
@@ -181,11 +202,12 @@ public class BodyUtils {
         Constants.PAGE_QUERY = json.toString().equals("{\"profile\":\"UserHandle{0}\"}") ? "" : json.toString();
     }
 
-    public static Object getEventParamValue(com.alibaba.fastjson.JSONObject jsonObject) {
+    public static Object getEventParamValue(JSONObject jsonObject) throws JSONException {
         if (jsonObject == null) {
             return "";
         } else {
-            Set<String> strings = jsonObject.keySet();
+//            Set<String> strings = jsonObject.keySet();
+            Set<String> strings = (Set<String>) jsonObject.keys();
             Map<String, Object> map = new HashMap<>();
             for (String keyStr : strings) {
                 if (jsonObject.get(keyStr) instanceof Integer) {
@@ -197,7 +219,8 @@ public class BodyUtils {
                 }
                 map.put(keyStr, jsonObject.get(keyStr) + "");
             }
-            Object json = JSON.toJSON(map);
+//            Object json = JSON.toJSON(map);
+            Object json = MapToJson(map);
             return json;
         }
     }

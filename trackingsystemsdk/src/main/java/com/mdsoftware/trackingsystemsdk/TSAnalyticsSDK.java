@@ -4,8 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class TSAnalyticsSDK {
 
@@ -47,7 +49,7 @@ public class TSAnalyticsSDK {
             return;
         }
         JSONArray jArray = new JSONArray();
-        jArray.add(BodyUtils.getUserInfo(user));
+        jArray.put(BodyUtils.getUserInfo(user));
         String str = jArray.toString();
         Log.v("Lifecycle_api", " user: " + str);
         AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getUserInfo(user)));
@@ -59,7 +61,7 @@ public class TSAnalyticsSDK {
 
     public static void setStartSession() {
         JSONArray jArray = new JSONArray();
-        jArray.add(BodyUtils.getStartSessionMap());
+        jArray.put(BodyUtils.getStartSessionMap());
         String str = jArray.toString();
         Log.v("Lifecycle_api", " start: " + str);
         AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getStartSessionMap()));
@@ -67,7 +69,7 @@ public class TSAnalyticsSDK {
 
     public static void setEndSession() {
         JSONArray jArray = new JSONArray();
-        jArray.add(BodyUtils.getEndSessionMap());
+        jArray.put(BodyUtils.getEndSessionMap());
         String str = jArray.toString();
         Log.v("Lifecycle_api", " end: " + str);
         AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getEndSessionMap()));
@@ -75,10 +77,18 @@ public class TSAnalyticsSDK {
 
     public static void event(JSONObject event_param) {
         JSONArray jArray = new JSONArray();
-        jArray.add(BodyUtils.getEventMap(event_param));
+        try {
+            jArray.put(BodyUtils.getEventMap(event_param));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         String str = jArray.toString();
         Log.v("Lifecycle_api", " event: " + str);
-        AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getEventMap(event_param)));
+        try {
+            AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getEventMap(event_param)));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void setPageName(String pageName) {

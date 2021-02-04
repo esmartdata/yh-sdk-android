@@ -1,11 +1,10 @@
 package com.mdsoftware.trackingsystem;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class Start extends AppCompatActivity {
+public class Start extends Activity {
 
 
     @Override
