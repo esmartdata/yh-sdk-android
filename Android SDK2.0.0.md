@@ -29,7 +29,12 @@ allprojects {
 2、修改在app下的 build.gradle中的dependencies标签下加入
 
 ```git
+//以下方式二选一即可
+//androidx引用方式
 implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:2.0.0'
+
+//android support引用方式
+implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:2.0.1'
 ```
 
 3、在app下的AndroidManifest.xml中加入以下权限：
