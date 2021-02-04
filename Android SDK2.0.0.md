@@ -32,7 +32,19 @@ allprojects {
 implementation 'com.esmartwave.analytics.androidsdk:TrackingSystemSDK:2.0.0'
 ```
 
+3、在app下的AndroidManifest.xml中加入以下权限：
 
+```
+<!-- 同步数据需要网络权限 -->
+<uses-permission android:name="android.permission.INTERNET" />
+
+<!-- 获取网络状态 -->
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<!-- 获取运营商信息 -->
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+```
 
 
 #### 1.3、初始化SDK
