@@ -77,18 +77,11 @@ public class TSAnalyticsSDK {
 
     public static void event(JSONObject event_param) {
         JSONArray jArray = new JSONArray();
-        try {
-            jArray.put(BodyUtils.getEventMap(event_param));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jArray.put(BodyUtils.getEventMap(event_param));
+
         String str = jArray.toString();
         Log.v("Lifecycle_api", " event: " + str);
-        try {
-            AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getEventMap(event_param)));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        AsyncHttpUtils.Post(BodyUtils.jsonToBase64(BodyUtils.getEventMap(event_param)));
     }
 
     public static void setPageName(String pageName) {

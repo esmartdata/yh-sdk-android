@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
-apply plugin: 'signing'
 
-// 进行数字签名
-signing {
-    required { gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
-}
+//apply plugin: 'signing'
+//
+//// 进行数字签名
+//signing {
+//    required { gradle.taskGraph.hasTask("uploadArchives") }
+//    sign configurations.archives
+//}
 
 android {
     compileSdkVersion 30
@@ -62,50 +63,70 @@ artifacts {
     archives androidJavadocsJar
 }
 
+//发布正式
+//uploadArchives {
+////    repositories {
+////        mavenDeployer {
+////            //不加会导致缺失 .pom.asc 文件
+////            beforeDeployment {
+////                MavenDeployment deployment -> signing.signPom(deployment)
+////            }
+////
+////            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+////                authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
+////            }
+////
+//////            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+//////                authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
+//////            }
+////
+////            pom.project {
+////                name 'TrackingSystemSDK'
+////                version '2.0.1'
+////                artifactId 'TrackingSystemSDK'
+////                groupId 'com.esmartwave.analytics.androidsdk'
+////                packaging 'aar'
+////                description 'Upload TrackingSystemSDK'
+////
+////                developers {
+////                    developer {
+////                        id 'kingsley.li'
+////                        name 'kingsley.li'
+////                        email 'kingsley.li@esmartwave.com'
+////                    }
+////                }
+////
+////                scm {
+////                    connection 'scm:git:https://github.com/esmartdata/yh-sdk-android.git'
+////                    developerConnection 'scm:git:https://github.com/esmartdata/yh-sdk-android.git'
+////                    url 'https://github.com/esmartdata/yh-sdk-android.git'
+////                }
+////
+////                licenses {
+////                    license {
+////                        name 'The Apache License, Version 2.0'
+////                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+////                    }
+////                }
+////            }
+////        }
+////    }
+////}
+
+//发布快照
 uploadArchives {
     repositories {
         mavenDeployer {
-            //不加会导致缺失 .pom.asc 文件
-            beforeDeployment {
-                MavenDeployment deployment -> signing.signPom(deployment)
-            }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+            repository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
                 authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
             }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
-                authentication(userName: "kingsley.li", password: "QD2In6Ha8P!!!")
-            }
-
             pom.project {
                 name 'TrackingSystemSDK'
-                version '2.0.1'
+                version '2.0.1-SNAPSHOT'
                 artifactId 'TrackingSystemSDK'
                 groupId 'com.esmartwave.analytics.androidsdk'
                 packaging 'aar'
-                description 'Upload TrackingSystemSDK'
-
-                developers {
-                    developer {
-                        id 'kingsley.li'
-                        name 'kingsley.li'
-                        email 'kingsley.li@esmartwave.com'
-                    }
-                }
-
-                scm {
-                    connection 'scm:git:https://github.com/esmartdata/yh-sdk-android.git'
-                    developerConnection 'scm:git:https://github.com/esmartdata/yh-sdk-android.git'
-                    url 'https://github.com/esmartdata/yh-sdk-android.git'
-                }
-
-                licenses {
-                    license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
+                description 'Your Project Description'
             }
         }
     }

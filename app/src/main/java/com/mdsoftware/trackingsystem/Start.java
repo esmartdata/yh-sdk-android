@@ -1,10 +1,10 @@
 package com.mdsoftware.trackingsystem;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-public class Start extends Activity {
+public class Start extends AppCompatActivity {
 
 
     @Override
@@ -18,7 +18,5 @@ public class Start extends Activity {
                 finish();
             }
         });
-
     }
-
 }

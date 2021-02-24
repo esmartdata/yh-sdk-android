@@ -1,21 +1,18 @@
 package com.mdsoftware.trackingsystem;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+import com.alibaba.fastjson.JSONObject;
 import com.mdsoftware.trackingsystemsdk.StringUtils;
 import com.mdsoftware.trackingsystemsdk.TSAnalyticsSDK;
 import com.mdsoftware.trackingsystemsdk.TSUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     EditText et1, et2, et3, et4, et5, et6;
 
@@ -65,20 +62,15 @@ public class MainActivity extends Activity {
                 JSONObject eventInfo = new JSONObject();
                 //初始化事件参数
                 JSONObject eventParam = new JSONObject();
-                try {
-                    eventParam.put("phone", "1861087138x");//事件参数-手机号 非必须
-                    eventParam.put("verificationCode", "HELLO");//事件参数-验证码 非必需
-                    //设置事件名称
-                    eventInfo.put("eventName", "获取验证码");//事件名称 必须
-                    //设置事件参数
-                    eventInfo.put("eventParam", eventParam);//事件名称 必须
+                eventParam.put("phone", "1861087138x");//事件参数-手机号 非必须
+                eventParam.put("verificationCode", "HELLO");//事件参数-验证码 非必需
+                //设置事件名称
+                eventInfo.put("eventName", "获取验证码");//事件名称 必须
+                //设置事件参数
+//                eventInfo.put("eventParam", eventParam);//事件名称 必须
 
-                    //调用采集事件接口
-                    TSAnalyticsSDK.sharedInstance().event(eventInfo);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                //调用采集事件接口
+                TSAnalyticsSDK.sharedInstance().event(eventInfo);
 
                 Toast.makeText(MainActivity.this, "你已经点击了手动触发按钮", Toast.LENGTH_SHORT).show();
             }

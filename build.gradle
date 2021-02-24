@@ -16,12 +16,12 @@ allprojects {
     repositories {
         google()
         jcenter()
-//        maven {
+        maven {
 //            //SNAPSHOT仓库地址
 //            url "https://oss.sonatype.org/content/repositories/snapshots"
             //正式仓库地址
-//            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-//        }
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+        }
     }
 }
 

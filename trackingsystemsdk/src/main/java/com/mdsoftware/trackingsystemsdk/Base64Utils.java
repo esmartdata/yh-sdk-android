@@ -22,26 +22,30 @@ import java.io.Writer;
 
 public class Base64Utils {
     private static Base64Utils utils = null;
+
     public Base64Utils() {
     }
+
     /**
      * 机能概要:单利 ，懒汉模式
+     *
      * @return
      */
-    public static Base64Utils getInstance(){
-        if(utils == null){
+    public static Base64Utils getInstance() {
+        if (utils == null) {
             synchronized (Base64Utils.class) {
-                if(utils == null ){
+                if (utils == null) {
                     utils = new Base64Utils();
                 }
             }
         }
         return utils;
     }
+
     /**
      * 功能：编码字符串
-     * @param data
-     *            源字符串
+     *
+     * @param data 源字符串
      * @return String
      */
     public static String encode(String data) {
@@ -51,11 +55,10 @@ public class Base64Utils {
     /**
      * 功能：解码字符串
      *
+     * @param data 源字符串
+     * @return String
      * @author jiangshuai
      * @date 2016年10月03日
-     * @param data
-     *            源字符串
-     * @return String
      */
     public static String decode(String data) {
         return new String(decode(data.toCharArray()));
@@ -63,8 +66,8 @@ public class Base64Utils {
 
     /**
      * 功能：编码byte[]
-     * @param data
-     *            源
+     *
+     * @param data 源
      * @return char[]
      */
     public static char[] encode(byte[] data) {
@@ -97,8 +100,8 @@ public class Base64Utils {
 
     /**
      * 功能：解码
-     * @param data
-     *            编码后的字符数组
+     *
+     * @param data 编码后的字符数组
      * @return byte[]
      */
     public static byte[] decode(char[] data) {
@@ -155,15 +158,12 @@ public class Base64Utils {
     /**
      * 功能：编码文件
      *
-     * @param file
-     *            源文件
+     * @param file 源文件
      */
     public static void encode(File file) throws IOException {
         if (!file.exists()) {
             System.exit(0);
-        }
-
-        else {
+        } else {
             byte[] decoded = readBytes(file);
             char[] encoded = encode(decoded);
             writeChars(file, encoded);
@@ -174,8 +174,7 @@ public class Base64Utils {
     /**
      * 功能：解码文件。
      *
-     * @param file
-     *            源文件
+     * @param file 源文件
      * @throws IOException
      */
     public static void decode(File file) throws IOException {
@@ -199,6 +198,7 @@ public class Base64Utils {
     // lookup table for converting base64 characters to value in range 0..63
     //
     private static byte[] codes = new byte[256];
+
     static {
         for (int i = 0; i < 256; i++) {
             codes[i] = -1;
@@ -327,10 +327,11 @@ public class Base64Utils {
 
     /**
      * 字符Base64加密
+     *
      * @param str
      * @return
      */
-    public static String encodeToString(String str){
+    public static String encodeToString(String str) {
         try {
             return Base64.encodeToString(str.getBytes("UTF-8"), Base64.DEFAULT);
         } catch (UnsupportedEncodingException e) {
@@ -338,12 +339,14 @@ public class Base64Utils {
         }
         return "";
     }
+
     /**
      * 字符Base64解密
+     *
      * @param str
      * @return
      */
-    public static String decodeToString(String str){
+    public static String decodeToString(String str) {
         try {
             return new String(Base64.decode(str.getBytes("UTF-8"), Base64.DEFAULT));
         } catch (UnsupportedEncodingException e) {
