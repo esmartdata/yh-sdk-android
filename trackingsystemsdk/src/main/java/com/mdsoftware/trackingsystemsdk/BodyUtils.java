@@ -145,17 +145,10 @@ public class BodyUtils {
 
     public static String jsonToBase64(Map map) {
         try {
-//            byte byteXl[] = JSON.toJSONString(map).getBytes("UTF-8");
-//            String base64EncStr = new String(Base64.encodeBase64(byteXl), "UTF-8");
-//            String jsonString = URLEncoder.encode(base64EncStr, "UTF-8");
-//            return jsonString;
-//            JSONObject jsonObject=JSONObject.fromObject(map);
-
             String x = MapToJson(map);
             String base64EncStr = Base64Utils.encodeToString(x);
             String jsonString = URLEncoder.encode(base64EncStr, "UTF-8");
             return jsonString;
-//            return Base64Coder.encodeString(map.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -212,10 +205,10 @@ public class BodyUtils {
         if (jsonObject == null) {
             return "";
         } else {
-//            Set<String> strings = jsonObject.keySet();
-            Set<String> strings = (Set<String>) jsonObject.keys();
+            Iterator<String> strings = jsonObject.keys();
             Map<String, Object> map = new HashMap<>();
-            for (String keyStr : strings) {
+            while (strings.hasNext()){
+                String keyStr = strings.next();
                 try {
                     if (jsonObject.get(keyStr) instanceof Integer) {
                         System.out.println("intent extras(int) :" + keyStr + "=" + jsonObject.get(keyStr));
@@ -230,9 +223,7 @@ public class BodyUtils {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
-//            Object json = JSON.toJSON(map);
             return json;
         }
     }
